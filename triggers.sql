@@ -1,5 +1,4 @@
 
-
 ----- CRIAÇÃO DAS FUNÇÕES DOS TRIGGERS -----
 
 CREATE OR REPLACE FUNCTION VERIFICAR_TUTOR()
@@ -131,7 +130,7 @@ BEGIN
 		END IF;
 
 		IF NOT EXISTS (SELECT 1 FROM TUTOR WHERE NEW.COD_TUTOR = COD_TUTOR) THEN
-			RAISE EXCEPTION 'O código do tutor informado não existe.'
+			RAISE EXCEPTION 'O código do tutor informado não existe.';
 		END IF;
 
 
@@ -149,7 +148,7 @@ BEGIN
 	END IF;
 
 	IF TG_OP = 'DELETE' THEN
-		IF EXISTS (SELECT 1 FROM VINCULO WHERE NEW.COD_PET = COD_PET) THEN
+		IF EXISTS (SELECT 1 FROM VINCULO WHERE OLD.COD_PET = COD_PET) THEN
 			DELETE FROM VINCULO WHERE COD_PET = OLD.COD_PET;
 		END IF;
 		
@@ -305,6 +304,450 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 
+CREATE OR REPLACE FUNCTION VERIFICAR_ATENDENTE()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+
+        IF NEW.NOME IS NULL OR NEW.NOME = '' THEN
+            RAISE EXCEPTION 'O nome do atendente não pode ser vazio.';
+        END IF;
+
+        IF NEW.DT_NASC IS NULL THEN
+            RAISE EXCEPTION 'A data de nascimento do atendente não pode ser vazia.';
+        END IF;
+
+        IF NEW.SALARIO IS NULL OR NEW.SALARIO < 0 THEN
+            RAISE EXCEPTION 'O salário do atendente não pode ser vazio ou menor que zero.';
+        END IF;
+
+        IF LENGTH(NEW.NOME) > 50 THEN
+            RAISE EXCEPTION 'O nome do atendente ultrapassa o limite de 50 caracteres.';
+        END IF;
+    END IF;
+	
+    IF TG_OP = 'DELETE' THEN
+	
+		IF EXISTS (SELECT 1 FROM CONSULTA WHERE COD_ATEND = OLD.COD_ATEND) THEN
+			DELETE FROM CONSULTA WHERE COD_ATEND = OLD.COD_ATEND;
+		END IF;
+
+		IF EXISTS (SELECT 1 FROM VACINACAO WHERE COD_ATEND = OLD.COD_ATEND) THEN
+			DELETE FROM VACINACAO WHERE COD_ATEND = OLD.COD_ATEND;
+		END IF;
+		
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_PAGAMENTO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+	
+        IF NEW.FORMA_PAG IS NULL OR NEW.FORMA_PAG = '' THEN
+            RAISE EXCEPTION 'A forma de pagamento não pode ser vazia.';
+        END IF;
+
+        IF LENGTH(NEW.FORMA_PAG) > 10 THEN
+            RAISE EXCEPTION 'A forma de pagamento ultrapassa o limite de 10 caracteres.';
+        END IF;
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+		IF EXISTS (SELECT 1 FROM CONSULTA WHERE COD_PAG = OLD.COD_PAG) THEN
+			DELETE FROM CONSULTA WHERE COD_PAG = OLD.COD_PAG;
+		END IF;
+
+		IF EXISTS (SELECT 1 FROM VACINACAO WHERE COD_PAG = OLD.COD_PAG) THEN
+			DELETE FROM VACINACAO WHERE COD_PAG = OLD.COD_PAG;
+		END IF;
+
+		IF EXISTS (SELECT 1 FROM PARCELA WHERE COD_PAG = OLD.COD_PAG) THEN
+			DELETE FROM PARCELA WHERE COD_PAG = OLD.COD_PAG;
+		END IF;
+		
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_PARCELA()
+RETURNS TRIGGER AS $$
+BEGIN
+
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+
+        IF NEW.VENC IS NULL THEN
+            RAISE EXCEPTION 'A data de vencimento da parcela não pode ser vazio.';
+        END IF;
+
+        IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
+            RAISE EXCEPTION 'O valor da parcela não pode ser vazio.';
+        END IF;
+
+        IF NEW.STATUS IS NULL THEN
+            RAISE EXCEPTION 'O status da parcela não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_PAG IS NULL THEN
+            RAISE EXCEPTION 'O código do pagamento não pode ser vazio.';
+        END IF;
+
+        IF NOT EXISTS (SELECT 1 FROM PAGAMENTO WHERE COD_PAG = NEW.COD_PAG) THEN
+            RAISE EXCEPTION 'O código do pagamento informado não existe.';
+        END IF;
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_CONSULTA()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+
+        IF NEW.DATA IS NULL THEN
+            RAISE EXCEPTION 'A data da consulta não pode ser vazio.';
+        END IF;
+
+        IF NEW.HORA IS NULL THEN
+            RAISE EXCEPTION 'O horário da consulta não pode ser vazio.';
+        END IF;
+
+        IF NEW.DIAGNOSTICO IS NULL OR NEW.DIAGNOSTICO = '' THEN
+            RAISE EXCEPTION 'O diagnóstico da consulta não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_VET IS NULL THEN
+            RAISE EXCEPTION 'O código do veterinário não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_VINCULO IS NULL THEN
+            RAISE EXCEPTION 'O código do vínculo não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_ATEND IS NULL THEN
+            RAISE EXCEPTION 'O código do atendente não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_PAG IS NULL THEN
+            RAISE EXCEPTION 'O código do pagamento não pode ser vazio.';
+        END IF;
+
+        IF NOT EXISTS (SELECT 1 FROM VETERINARIO WHERE COD_VET = NEW.COD_VET) THEN
+            RAISE EXCEPTION 'O código do veterinário informado não existe.';
+        END IF;
+
+        IF NOT EXISTS (SELECT 1 FROM VINCULO WHERE COD_VINCULO = NEW.COD_VINCULO) THEN
+            RAISE EXCEPTION 'O código do vínculo informado não existe.';
+        END IF;
+
+        IF NOT EXISTS (SELECT 1 FROM ATENDENTE WHERE COD_ATEND = NEW.COD_ATEND) THEN
+            RAISE EXCEPTION 'O código do atendente informado não existe.';
+        END IF;
+
+        IF NOT EXISTS (SELECT 1 FROM PAGAMENTO WHERE COD_PAG = NEW.COD_PAG) THEN
+            RAISE EXCEPTION 'O código do pagamento informado não existe.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+	
+		IF EXISTS (SELECT 1 FROM MEDICACAO WHERE COD_CONSULTA = OLD.COD_CONSULTA) THEN
+			DELETE FROM MEDICACAO WHERE COD_CONSULTA = OLD.COD_CONSULTA;
+		END IF;
+		
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_VACINACAO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+
+        IF NEW.DATA IS NULL THEN
+            RAISE EXCEPTION 'A data da vacinação não pode ser vazio.';
+        END IF;
+
+        IF NEW.HORA IS NULL THEN
+            RAISE EXCEPTION 'A hora da vacinação não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_VET IS NULL THEN
+            RAISE EXCEPTION 'O código do veterinário não pode ser vazio.';
+		END IF;
+
+        IF NEW.COD_VINCULO IS NULL THEN
+            RAISE EXCEPTION 'O código do vínculo não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_ATEND IS NULL THEN
+            RAISE EXCEPTION 'O código do atendente não pode ser vazio.';
+		END IF;
+
+        IF NEW.COD_PAG IS NULL THEN
+            RAISE EXCEPTION 'O código do pagamento não pode ser vazio.';
+		END IF;
+
+		IF NOT EXISTS (SELECT 1 FROM VETERINARIO WHERE COD_VET = NEW.COD_VET) THEN
+            RAISE EXCEPTION 'O código do veterinário informado não existe.';
+        END IF;
+
+		IF NOT EXISTS (SELECT 1 FROM VINCULO WHERE COD_VINCULO = NEW.COD_VINCULO) THEN
+            RAISE EXCEPTION 'O código do vínculo informado não existe.';
+        END IF;
+
+		IF NOT EXISTS (SELECT 1 FROM ATENDENTE WHERE COD_ATEND = NEW.COD_ATEND) THEN
+            RAISE EXCEPTION 'O código do atendente informado não existe.';
+        END IF;
+		
+        IF NOT EXISTS (SELECT 1 FROM PAGAMENTO WHERE COD_PAG = NEW.COD_PAG) THEN
+            RAISE EXCEPTION 'O código do pagamento informado não existe.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+		IF EXISTS (SELECT 1 FROM ITEM_VACINACAO WHERE COD_VACINACAO = OLD.COD_VACINACAO) THEN
+			DELETE FROM ITEM_VACINACAO WHERE COD_VACINACAO = OLD.COD_VACINACAO;
+		END IF;
+		
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_MEDICACAO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+
+        IF NEW.DATA IS NULL THEN
+            RAISE EXCEPTION 'A data da medicação não pode ser vazio.';
+        END IF;
+
+        IF NEW.HORA IS NULL THEN
+            RAISE EXCEPTION 'A hora da medicação não pode ser vazio.';
+        END IF;
+
+        IF NEW.COD_CONSULTA IS NULL THEN
+            RAISE EXCEPTION 'O código da consulta não pode ser vazio.';
+        END IF;
+		
+		IF NOT EXISTS (SELECT 1 FROM CONSULTA WHERE COD_CONSULTA = NEW.COD_CONSULTA) THEN
+            RAISE EXCEPTION 'O código da consulta informada não existe.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+		IF EXISTS (SELECT 1 FROM ITEM_MEDICACAO WHERE COD_MEDICACAO = OLD.COD_MEDICACAO) THEN
+			DELETE FROM ITEM_MEDICACAO WHERE COD_MEDICACAO = OLD.COD_MEDICACAO;
+		END IF;
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_TIPO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+        IF NEW.NOME IS NULL OR NEW.NOME = '' THEN
+            RAISE EXCEPTION 'O nome do tipo não pode ser vazio.';
+        END IF;
+
+        IF LENGTH(NEW.NOME) > 30 THEN
+            RAISE EXCEPTION 'O nome do tipo ultrapassa o limite de 30 caracteres.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+		IF EXISTS (SELECT 1 FROM FARMACO WHERE COD_TIPO = OLD.COD_TIPO) THEN
+			DELETE FROM FARMACO WHERE COD_TIPO = OLD.COD_TIPO;
+		END IF;
+		
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_FARMACO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+
+        IF NEW.NOME IS NULL OR NEW.NOME = '' THEN
+            RAISE EXCEPTION 'O nome do fármaco não pode ser vazio.';
+        END IF;
+
+		IF NEW.DOSE IS NULL THEN
+			RAISE EXCEPTION 'A dose do fármaco não pode ser nula.';
+		END IF;
+
+        IF NEW.DOSE <= 0 THEN
+            RAISE EXCEPTION 'A dose do fármaco deve ser maior que zero.';
+        END IF;
+
+        IF NEW.VALIDADE IS NULL THEN
+            RAISE EXCEPTION 'A data de validade do fármaco não pode ser nula.';
+        END IF;
+
+        IF NEW.LOTE IS NULL OR NEW.LOTE = '' THEN
+            RAISE EXCEPTION 'O lote do fármaco não pode ser vazio.';
+		END IF;
+
+        IF NEW.DT_ENTRADA IS NULL THEN
+            RAISE EXCEPTION 'A data de entrada do fármaco não pode ser nula.';
+        END IF;
+
+        IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
+            RAISE EXCEPTION 'O valor do fármaco não pode ser nulo ou negativo.';
+        END IF;
+
+        IF NEW.QUANT IS NULL OR NEW.QUANT < 0 THEN
+            RAISE EXCEPTION 'A quantidade do fármaco não pode ser nula ou negativa.';
+        END IF;
+
+        IF NEW.COD_TIPO IS NULL THEN
+            RAISE EXCEPTION 'O código do tipo do fármaco não pode ser nulo.';
+		END IF;
+
+		IF LENGTH(NEW.NOME) > 50 THEN
+            RAISE EXCEPTION 'O nome do fármaco ultrapassa o limite de 50 caracteres.';
+        END IF;
+
+		IF LENGTH(NEW.LOTE) > 30 THEN
+            RAISE EXCEPTION 'O lote do fármaco ultrapassa o limite de 30 caracteres.';
+        END IF;
+
+		IF NOT EXISTS (SELECT 1 FROM TIPO WHERE COD_TIPO = NEW.COD_TIPO) THEN
+            RAISE EXCEPTION 'O código do tipo informado não existe.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+		IF EXISTS (SELECT 1 FROM ITEM_VACINACAO WHERE COD_FARM = OLD.COD_FARM) THEN
+			DELETE FROM ITEM_VACINACAO WHERE COD_FARM = OLD.COD_FARM;
+		END IF;
+
+		IF EXISTS (SELECT 1 FROM ITEM_MEDICACAO WHERE COD_FARM = OLD.COD_FARM) THEN
+			DELETE FROM ITEM_MEDICACAO WHERE COD_FARM = OLD.COD_FARM;
+		END IF;
+		
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_ITEM_VACINACAO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+
+        IF NEW.COD_VACINACAO IS NULL THEN
+            RAISE EXCEPTION 'O código da vacinação não pode ser nulo.';
+        END IF;
+
+        IF NEW.COD_FARM IS NULL THEN
+            RAISE EXCEPTION 'O código do fármaco não pode ser nulo.';
+		END IF;
+
+		IF NOT EXISTS (SELECT 1 FROM VACINACAO WHERE COD_VACINACAO = NEW.COD_VACINACAO) THEN
+            RAISE EXCEPTION 'O código da vacinação informado não existe.';
+        END IF;
+		
+        IF NOT EXISTS (SELECT 1 FROM FARMACO WHERE COD_FARM = NEW.COD_FARM) THEN
+            RAISE EXCEPTION 'O código do fármaco informado não existe.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+
+CREATE OR REPLACE FUNCTION VERIFICAR_ITEM_MEDICACAO()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+
+        IF NEW.COD_MEDICACAO IS NULL THEN
+            RAISE EXCEPTION 'O código da medicação não pode ser nulo.';
+        END IF;
+
+        IF NEW.COD_FARM IS NULL THEN
+            RAISE EXCEPTION 'O código do fármaco não pode ser nulo.';
+        END IF;
+
+		IF NOT EXISTS (SELECT 1 FROM MEDICACAO WHERE COD_MEDICACAO = NEW.COD_MEDICACAO) THEN
+            RAISE EXCEPTION 'O código da medicação informado não existe.';
+        END IF;
+		
+		IF NOT EXISTS (SELECT 1 FROM FARMACO WHERE COD_FARM = NEW.COD_FARM) THEN
+            RAISE EXCEPTION 'O código do fármaco informado não existe.';
+        END IF;
+
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+
 ----- CRIAÇÃO DOS TRIGGERS -----
 
 CREATE OR REPLACE TRIGGER TRIGGER_VERIFICAR_TUTOR
@@ -379,6 +822,12 @@ FOR EACH ROW EXECUTE FUNCTION VERIFICAR_MEDICACAO();
 
 
 
+CREATE OR REPLACE TRIGGER TRIGGER_VERIFICAR_TIPO
+BEFORE INSERT OR UPDATE OR DELETE ON TIPO
+FOR EACH ROW EXECUTE FUNCTION VERIFICAR_TIPO();
+
+
+
 CREATE OR REPLACE TRIGGER TRIGGER_VERIFICAR_FARMACO
 BEFORE INSERT OR UPDATE OR DELETE ON FARMACO
 FOR EACH ROW EXECUTE FUNCTION VERIFICAR_FARMACO();
@@ -387,7 +836,7 @@ FOR EACH ROW EXECUTE FUNCTION VERIFICAR_FARMACO();
 
 CREATE OR REPLACE TRIGGER TRIGGER_VERIFICAR_ITEM_VACINACAO
 BEFORE INSERT OR UPDATE OR DELETE ON ITEM_VACINACAO
-FOR EACH ROW EXECUTE FUNCTION VERIFICAR_VACINACAO();
+FOR EACH ROW EXECUTE FUNCTION VERIFICAR_ITEM_VACINACAO();
 
 
 
