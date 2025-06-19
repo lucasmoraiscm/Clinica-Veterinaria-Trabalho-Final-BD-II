@@ -80,8 +80,16 @@ BEGIN
 			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser vazio ou menor que 0.';
 		END IF;
 
+		IF NEW.DESCONTO_CONSULTA > 100 THEN
+			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser maior que 100.';
+		END IF;
+
 		IF NEW.DESCONTO_VACINACAO IS NULL OR NEW.DESCONTO_VACINACAO < 0 THEN
 			RAISE EXCEPTION 'O desconto da vacinacao do plano pet não pode ser vazio ou menor que 0.';
+		END IF;
+
+		IF NEW.DESCONTO_VACINACAO > 100 THEN
+			RAISE EXCEPTION 'O desconto da vacinacao do plano pet não pode ser maior que 100.';
 		END IF;
 
 		IF LENGTH(NEW.NOME) > 50 THEN
@@ -100,7 +108,7 @@ BEGIN
 
 	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL
+$$ LANGUAGE PLPGSQL;
 
 
 
@@ -354,8 +362,20 @@ BEGIN
             RAISE EXCEPTION 'A forma de pagamento não pode ser vazia.';
         END IF;
 
-        IF LENGTH(NEW.FORMA_PAG) > 10 THEN
-            RAISE EXCEPTION 'A forma de pagamento ultrapassa o limite de 10 caracteres.';
+		IF NEW.VALOR_TOTAL IS NULL OR NEW.VALOR_TOTAL < 0 THEN
+            RAISE EXCEPTION 'O valor total não pode ser vazio ou menor que zero.';
+        END IF;
+
+		IF NEW.QUANT_PARCELAS IS NULL OR NEW.QUANT_PARCELAS < 1 THEN
+            RAISE EXCEPTION 'A quantidade de parcelas não pode ser vazia ou menor que 1.';
+        END IF;
+
+		IF NEW.DATA IS NULL THEN
+            RAISE EXCEPTION 'A data do pagamento não pode ser vazio.';
+        END IF;
+
+        IF LENGTH(NEW.FORMA_PAG) > 20 THEN
+            RAISE EXCEPTION 'A forma de pagamento ultrapassa o limite de 20 caracteres.';
         END IF;
     END IF;
 
@@ -392,7 +412,7 @@ BEGIN
         END IF;
 
         IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
-            RAISE EXCEPTION 'O valor da parcela não pode ser vazio.';
+            RAISE EXCEPTION 'O valor da parcela não pode ser vazio ou menor que zero.';
         END IF;
 
         IF NEW.STATUS IS NULL THEN
@@ -617,13 +637,9 @@ BEGIN
             RAISE EXCEPTION 'O nome do fármaco não pode ser vazio.';
         END IF;
 
-		IF NEW.DOSE IS NULL THEN
+		IF NEW.DOSE IS NULL OR NEW.DOSE = '' THEN
 			RAISE EXCEPTION 'A dose do fármaco não pode ser nula.';
 		END IF;
-
-        IF NEW.DOSE <= 0 THEN
-            RAISE EXCEPTION 'A dose do fármaco deve ser maior que zero.';
-        END IF;
 
         IF NEW.VALIDADE IS NULL THEN
             RAISE EXCEPTION 'A data de validade do fármaco não pode ser nula.';
@@ -651,6 +667,10 @@ BEGIN
 
 		IF LENGTH(NEW.NOME) > 50 THEN
             RAISE EXCEPTION 'O nome do fármaco ultrapassa o limite de 50 caracteres.';
+        END IF;
+
+		IF LENGTH(NEW.DOSE) > 10 THEN
+            RAISE EXCEPTION 'A dose do fármaco ultrapassa o limite de 10 caracteres.';
         END IF;
 
 		IF LENGTH(NEW.LOTE) > 30 THEN
