@@ -262,8 +262,8 @@ BEGIN
 			RAISE EXCEPTION 'O nome do veterinário não pode ser vazio.';
 		END IF;
 
-		IF NEW.CRMV IS NULL THEN
-			RAISE EXCEPTION 'O CRMV do veterinário não pode ser nulo.';
+		IF NEW.CRMV IS NULL OR NEW.CRMV = '' THEN
+			RAISE EXCEPTION 'O CRMV do veterinário não pode ser vazio.';
 		END IF;
 
 		IF TG_OP = 'INSERT' AND EXISTS (
