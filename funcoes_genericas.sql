@@ -119,3 +119,83 @@ EXCEPTION
 END;
 $$ LANGUAGE PLPGSQL;
 
+
+
+
+
+CREATE OR REPLACE FUNCTION ATUALIZAR_DADOS(
+    NOME_TABELA TEXT,
+    COLUNAS_E_VALORES TEXT,
+    CONDICAO_CHAVE TEXT
+) RETURNS VOID AS $$
+DECLARE
+    LINHAS_AFETADAS INT;
+BEGIN
+
+    IF UPPER(NOME_TABELA) NOT IN (
+        'TUTOR', 'PET', 'PLANO_PET', 'VINCULO', 'VETERINARIO',
+        'ATENDENTE', 'CONSULTA', 'VACINACAO', 'MEDICACAO',
+        'FARMACO', 'TIPO', 'PAGAMENTO', 'PARCELA',
+        'ITEM_VACINACAO', 'ITEM_MEDICACAO'
+    ) THEN
+        RAISE EXCEPTION '❌ A tabela "%" não existe no sistema...', NOME_TABELA;
+    END IF;
+
+    EXECUTE FORMAT('UPDATE %I SET %s WHERE %s', NOME_TABELA, COLUNAS_E_VALORES, CONDICAO_CHAVE);
+
+    GET DIAGNOSTICS LINHAS_AFETADAS = ROW_COUNT;
+
+    IF LINHAS_AFETADAS = 0 THEN
+        RAISE NOTICE '⚠️ Nenhum dado foi atualizado na tabela "%" com a condição: %', NOME_TABELA, CONDICAO_CHAVE;
+        RAISE NOTICE '⚠️ A condição não foi encontrada ou os valores já estavam atualizados.';
+    ELSE
+        RAISE NOTICE '✅ % registro(s) atualizado(s) na tabela "%" com a condição: %', LINHAS_AFETADAS, NOME_TABELA, CONDICAO_CHAVE;
+    END IF;
+
+EXCEPTION
+    WHEN OTHERS THEN
+		RAISE NOTICE '⚠️ Insira o nome da tabela, valores a ser atualizados ou a condição corretamente...';
+        RAISE EXCEPTION '❌ Erro ao atualizar dados da tabela "%": %', NOME_TABELA, SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+
+
+CREATE OR REPLACE FUNCTION DELETAR_DADOS(
+	NOME_TABELA TEXT,
+	CONDICAO_CHAVE TEXT
+) RETURNS VOID AS $$
+DECLARE
+	LINHAS_AFETADAS INT;
+BEGIN
+	IF UPPER(NOME_TABELA) NOT IN (
+	    'TUTOR', 'PET', 'PLANO_PET', 'VINCULO', 'VETERINARIO',
+	    'ATENDENTE', 'CONSULTA', 'VACINACAO', 'MEDICACAO',
+	    'FARMACO', 'TIPO', 'PAGAMENTO', 'PARCELA',
+	    'ITEM_VACINACAO', 'ITEM_MEDICACAO'
+	) THEN
+    	RAISE EXCEPTION 'A tabela "%" não existe no sistema. Tente novamente...', NOME_TABELA;
+	END IF;
+	
+	EXECUTE FORMAT('DELETE FROM %I WHERE %s',NOME_TABELA,CONDICAO_CHAVE);
+
+	GET DIAGNOSTICS LINHAS_AFETADAS = ROW_COUNT;
+
+	-- SABER SE HOUVE EXCLUSAO(SE NAO HOUVER, O ERRO PODE ESTAR NA CONDICAO )
+	IF LINHAS_AFETADAS = 0 THEN
+        RAISE NOTICE '⚠️ Nenhum dado foi excluído da tabela "%" com a condição: %', NOME_TABELA, CONDICAO_CHAVE;
+		RAISE NOTICE '⚠️ O dado já foi excluido ou numca existiu...';
+    ELSE
+        RAISE NOTICE '✅ % registro(s) excluído(s) da tabela "%" com a condição: %', LINHAS_AFETADAS, NOME_TABELA, CONDICAO_CHAVE;
+    END IF;
+		
+EXCEPTION
+	WHEN OTHERS THEN
+		RAISE NOTICE '⚠️ Insira o nome da tabela ou a condição corretamente...';
+		RAISE EXCEPTION '❌ Erro ao deletar dados da tabela "%": %', NOME_TABELA, SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
