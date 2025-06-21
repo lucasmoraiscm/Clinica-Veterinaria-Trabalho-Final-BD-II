@@ -13,7 +13,7 @@ INSERT INTO TUTOR (NOME, CPF, DT_NASC, FONE) VALUES
 
 
 --- PLANO_PET ---
-INSERT INTO PLANO_PET (NOME, VALOR, DESCONTO_CONSULTA, DESCONTO_VACINACAO) VALUES 
+INSERT INTO PLANO_PET (NOME, VALOR, DESCONTO_CONSULTA, DESCONTO_VACINACAO) VALUES
 ('Sem plano', 0, 0, 0),
 ('Plano Bem-Estar', 50, 25, 20),
 ('Plano Vitalidade', 100, 50, 40),
@@ -49,17 +49,17 @@ INSERT INTO VINCULO (DT_CONTRATACAO, STATUS, COD_PET, COD_PLANO_PET) VALUES
 
 
 --- ESPECIALIDADE ---
-INSERT INTO ESPECIALIDADE (NOME, DESCR) VALUES
-('Clínica Geral', 'Responsável pelo atendimento primário, consultas de rotina, vacinação e cuidados preventivos gerais para cães e gatos.'),
-('Dermatologia Veterinária', 'Diagnóstico e tratamento de doenças que afetam a pele, pelos, unhas e orelhas dos animais.'),
-('Cardiologia Veterinária', 'Focada no diagnóstico e tratamento de doenças do coração e do sistema circulatório, como insuficiência cardíaca e arritmias.'),
-('Oftalmologia Veterinária', 'Especialidade dedicada ao diagnóstico e tratamento de doenças e condições que afetam os olhos e a visão dos pets.'),
-('Ortopedia Veterinária', 'Trata de fraturas, luxações, displasias e outras lesões ou doenças do sistema locomotor (ossos, músculos e articulações).'),
-('Oncologia Veterinária', 'Diagnóstico e tratamento de diversos tipos de câncer em animais, incluindo quimioterapia e cuidados paliativos.'),
-('Neurologia Veterinária', 'Cuida de doenças que afetam o sistema nervoso central e periférico, como epilepsia, hérnias de disco e outras condições neurológicas.'),
-('Odontologia Veterinária', 'Especialidade voltada para a saúde bucal dos animais, incluindo limpeza de tártaro, tratamento de canal e extrações dentárias.'),
-('Animais Silvestres', 'Atendimento especializado para animais não convencionais ou exóticos, como aves, répteis e pequenos mamíferos.'),
-('Anestesiologia Veterinária', 'Responsável por administrar anestesias e sedativos, e monitorar os sinais vitais do paciente durante procedimentos cirúrgicos e exames.');
+INSERT INTO ESPECIALIDADE (NOME, DESCR, VALOR) VALUES
+('Clínica Geral', 'Responsável pelo atendimento primário, consultas de rotina, vacinação e cuidados preventivos gerais para cães e gatos.', 120.00),
+('Dermatologia Veterinária', 'Diagnóstico e tratamento de doenças que afetam a pele, pelos, unhas e orelhas dos animais.', 180.00),
+('Cardiologia Veterinária', 'Focada no diagnóstico e tratamento de doenças do coração e do sistema circulatório, como insuficiência cardíaca e arritmias.', 250.00),
+('Oftalmologia Veterinária', 'Especialidade dedicada ao diagnóstico e tratamento de doenças e condições que afetam os olhos e a visão dos pets.', 200.00),
+('Ortopedia Veterinária', 'Trata de fraturas, luxações, displasias e outras lesões ou doenças do sistema locomotor (ossos, músculos e articulações).', 300.00),
+('Oncologia Veterinária', 'Diagnóstico e tratamento de diversos tipos de câncer em animais, incluindo quimioterapia e cuidados paliativos.', 350.00),
+('Neurologia Veterinária', 'Cuida de doenças que afetam o sistema nervoso central e periférico, como epilepsia, hérnias de disco e outras condições neurológicas.', 320.00),
+('Odontologia Veterinária', 'Especialidade voltada para a saúde bucal dos animais, incluindo limpeza de tártaro, tratamento de canal e extrações dentárias.', 160.00),
+('Animais Silvestres', 'Atendimento especializado para animais não convencionais ou exóticos, como aves, répteis e pequenos mamíferos.', 220.00),
+('Anestesiologia Veterinária', 'Responsável por administrar anestesias e sedativos, e monitorar os sinais vitais do paciente durante procedimentos cirúrgicos e exames.', 150.00);
 
 
 --- VETERINARIO ---
@@ -143,43 +143,6 @@ INSERT INTO PARCELA (VENC, VALOR, STATUS, COD_PAG) VALUES
 ('2025-06-03', 45.50, TRUE, 20);
 
 
---- CONSULTA ---
-INSERT INTO CONSULTA (DATA, HORA, DIAGNOSTICO, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG) VALUES
-('2025-01-20', '10:00:00', 'Dermatite alérgica a picada de pulgas (DAPP).', 2, 1, 1, 1),
-('2025-01-22', '11:30:00', 'Otite externa bacteriana no ouvido direito.', 1, 2, 2, 2),
-('2025-02-05', '09:00:00', 'Check-up de rotina, animal saudável.', 1, 3, 3, 3),
-('2025-02-10', '14:00:00', 'Gengivite leve, recomendada limpeza de tártaro.', 8, 4, 4, 4),
-('2025-03-11', '16:00:00', 'Suspeita de sopro cardíaco, encaminhado para ecocardiograma.', 3, 5, 5, 5),
-('2025-03-15', '10:30:00', 'Vômitos e diarreia, diagnosticado com gastroenterite viral.', 1, 6, 6, 6),
-('2025-04-01', '08:45:00', 'Claudicação na pata dianteira esquerda. Luxação de patela.', 5, 7, 7, 7),
-('2025-04-05', '15:15:00', 'Avaliação pós-operatória de castração, tudo ok.', 1, 8, 8, 8),
-('2025-05-18', '11:00:00', 'Animal apresentando espirros constantes. Rinotraqueíte felina.', 1, 9, 9, 9),
-('2025-06-02', '17:00:00', 'Check-up em animal idoso. Sinais de artrose.', 5, 10, 10, 10);
-
-
---- VACINACAO ---
-INSERT INTO VACINACAO (DATA, HORA, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG) VALUES
-('2025-01-25', '15:00:00', 1, 1, 1, 11),
-('2025-02-15', '15:30:00', 1, 2, 2, 12),
-('2025-02-20', '16:00:00', 1, 3, 3, 13),
-('2025-03-10', '14:10:00', 1, 4, 4, 14),
-('2025-03-18', '11:00:00', 1, 5, 5, 15),
-('2025-04-11', '09:30:00', 1, 6, 6, 16),
-('2025-04-20', '10:45:00', 1, 7, 7, 17),
-('2025-05-05', '16:20:00', 1, 8, 8, 18),
-('2025-05-21', '12:00:00', 1, 9, 9, 19),
-('2025-06-03', '09:00:00', 1, 10, 10, 20);
-
-
---- MEDICACAO ---
-INSERT INTO MEDICACAO (DATA, HORA, COD_CONSULTA) VALUES
-('2025-01-20', '10:15:00', 1),
-('2025-01-22', '11:45:00', 2),
-('2025-03-15', '10:45:00', 6),
-('2025-05-18', '11:15:00', 9),
-('2025-06-02', '17:15:00', 10);
-
-
 --- TIPO ---
 INSERT INTO TIPO (NOME) VALUES
 ('Vacina'),
@@ -200,28 +163,39 @@ INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_T
 ('Shampoo Clorexidina Antisséptico', '200ml', '2028-04-15', 'SHA-7890F', '2025-06-01', 55.00, 60, 2);
 
 
---- ITEM_VACINACAO ---
-INSERT INTO ITEM_VACINACAO (COD_VACINACAO, COD_FARM) VALUES
-(1, 1),
-(1, 2),
-(2, 4),
-(3, 1),
-(4, 2),
-(5, 3),
-(5, 1),
-(6, 4),
-(7, 3),
-(8, 1),
-(8, 2),
-(9, 1),
-(10, 2);
+--- MEDICACAO ---
+INSERT INTO MEDICACAO (DATA, HORA, COD_FARM) VALUES
+('2025-01-20', '10:15:00', 6),
+('2025-01-22', '11:45:00', 8),
+('2025-03-15', '10:45:00', 9),
+('2025-05-18', '11:15:00', 8),
+('2025-06-02', '17:15:00', 5);
 
 
---- ITEM_MEDICACAO ---
-INSERT INTO ITEM_MEDICACAO (COD_MEDICACAO, COD_FARM) VALUES
-(1, 6),
-(1, 10),
-(2, 8),
-(3, 9),
-(4, 8),
-(5, 5);
+--- CONSULTA ---
+INSERT INTO CONSULTA (DATA, HORA, DIAGNOSTICO, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG, COD_MEDICACAO) VALUES
+('2025-01-20', '10:00:00', 'Dermatite alérgica a picada de pulgas (DAPP).', 2, 1, 1, 1, 1), -- COD_MEDICACAO 1
+('2025-01-22', '11:30:00', 'Otite externa bacteriana no ouvido direito.', 1, 2, 2, 2, 2), -- COD_MEDICACAO 2
+('2025-02-05', '09:00:00', 'Check-up de rotina, animal saudável.', 1, 3, 3, 3, NULL),
+('2025-02-10', '14:00:00', 'Gengivite leve, recomendada limpeza de tártaro.', 8, 4, 4, 4, NULL),
+('2025-03-11', '16:00:00', 'Suspeita de sopro cardíaco, encaminhado para ecocardiograma.', 3, 5, 5, 5, NULL),
+('2025-03-15', '10:30:00', 'Vômitos e diarreia, diagnosticado com gastroenterite viral.', 1, 6, 6, 6, 3), -- COD_MEDICACAO 3
+('2025-04-01', '08:45:00', 'Claudicação na pata dianteira esquerda. Luxação de patela.', 5, 7, 7, 7, NULL),
+('2025-04-05', '15:15:00', 'Avaliação pós-operatória de castração, tudo ok.', 1, 8, 8, 8, NULL),
+('2025-05-18', '11:00:00', 'Animal apresentando espirros constantes. Rinotraqueíte felina.', 1, 9, 9, 9, 4), -- COD_MEDICACAO 4
+('2025-06-02', '17:00:00', 'Check-up em animal idoso. Sinais de artrose.', 5, 10, 10, 10, 5); -- COD_MEDICACAO 5
+
+
+--- VACINACAO ---
+INSERT INTO VACINACAO (DATA, HORA, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG, COD_FARM) VALUES
+('2025-01-25', '15:00:00', 1, 1, 1, 11, 1),
+('2025-02-15', '15:30:00', 1, 2, 2, 12, 4),
+('2025-02-20', '16:00:00', 1, 3, 3, 13, 1),
+('2025-03-10', '14:10:00', 1, 4, 4, 14, 2),
+('2025-03-18', '11:00:00', 1, 5, 5, 15, 3),
+('2025-04-11', '09:30:00', 1, 6, 6, 16, 4),
+('2025-04-20', '10:45:00', 1, 7, 7, 17, 3),
+('2025-05-05', '16:20:00', 1, 8, 8, 18, 1),
+('2025-05-21', '12:00:00', 1, 9, 9, 19, 1),
+('2025-06-03', '09:00:00', 1, 10, 10, 20, 2);
+

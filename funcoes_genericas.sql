@@ -39,8 +39,8 @@ BEGIN
 
 
     ELSIF NOME_TABELA ILIKE 'ESPECIALIDADE' THEN
-        INSERT INTO ESPECIALIDADE (NOME, DESCR)
-        VALUES (VALOR1, VALOR2);
+        INSERT INTO ESPECIALIDADE (NOME, DESCR, VALOR)
+        VALUES (VALOR1, VALOR2, CAST(VALOR3 AS FLOAT)); -- Adicionado VALOR3 para o valor
         RAISE NOTICE 'Especialidade inserida com sucesso.';
 
     
@@ -97,18 +97,6 @@ BEGIN
         VALUES (VALOR1,VALOR2, CAST(VALOR3 AS DATE),VALOR4, CAST(VALOR5 AS DATE), CAST(VALOR6 AS FLOAT), CAST(VALOR7 AS INT), CAST(VALOR8 AS INT));
         RAISE NOTICE 'Fármaco inserido com sucesso.';
 
-    
-    ELSIF NOME_TABELA ILIKE 'ITEM_VACINACAO' THEN
-        INSERT INTO ITEM_VACINACAO (COD_VACINACAO, COD_FARM)
-        VALUES (CAST(VALOR1 AS INT), CAST(VALOR2 AS INT));
-        RAISE NOTICE 'Item de vacinação inserido com sucesso.';
-
-    
-    ELSIF NOME_TABELA ILIKE 'ITEM_MEDICACAO' THEN
-        INSERT INTO ITEM_MEDICACAO (COD_MEDICACAO, COD_FARM)
-        VALUES (CAST(VALOR1 AS INT), CAST(VALOR2 AS INT));
-        RAISE NOTICE 'Item de medicação inserido com sucesso.';
-
     ELSE
         RAISE EXCEPTION 'Tabela "%" não reconhecida para inserção.', NOME_TABELA;
     END IF;
@@ -135,8 +123,8 @@ BEGIN
     IF UPPER(NOME_TABELA) NOT IN (
         'TUTOR', 'PET', 'PLANO_PET', 'VINCULO', 'VETERINARIO',
         'ATENDENTE', 'CONSULTA', 'VACINACAO', 'MEDICACAO',
-        'FARMACO', 'TIPO', 'PAGAMENTO', 'PARCELA',
-        'ITEM_VACINACAO', 'ITEM_MEDICACAO'
+        'FARMACO', 'TIPO', 'PAGAMENTO', 'PARCELA', 'ESPECIALIDADE'
+        
     ) THEN
         RAISE EXCEPTION '❌ A tabela "%" não existe no sistema...', NOME_TABELA;
     END IF;
@@ -154,7 +142,7 @@ BEGIN
 
 EXCEPTION
     WHEN OTHERS THEN
-		RAISE NOTICE '⚠️ Insira o nome da tabela, valores a ser atualizados ou a condição corretamente...';
+        RAISE NOTICE '⚠️ Insira o nome da tabela, valores a ser atualizados ou a condição corretamente...';
         RAISE EXCEPTION '❌ Erro ao atualizar dados da tabela "%": %', NOME_TABELA, SQLERRM;
 END;
 $$ LANGUAGE PLPGSQL;
@@ -164,38 +152,38 @@ $$ LANGUAGE PLPGSQL;
 
 
 CREATE OR REPLACE FUNCTION DELETAR_DADOS(
-	NOME_TABELA TEXT,
-	CONDICAO_CHAVE TEXT
+    NOME_TABELA TEXT,
+    CONDICAO_CHAVE TEXT
 ) RETURNS VOID AS $$
 DECLARE
-	LINHAS_AFETADAS INT;
+    LINHAS_AFETADAS INT;
 BEGIN
-	IF UPPER(NOME_TABELA) NOT IN (
-	    'TUTOR', 'PET', 'PLANO_PET', 'VINCULO', 'VETERINARIO',
-	    'ATENDENTE', 'CONSULTA', 'VACINACAO', 'MEDICACAO',
-	    'FARMACO', 'TIPO', 'PAGAMENTO', 'PARCELA',
-	    'ITEM_VACINACAO', 'ITEM_MEDICACAO'
-	) THEN
-    	RAISE EXCEPTION 'A tabela "%" não existe no sistema. Tente novamente...', NOME_TABELA;
-	END IF;
-	
-	EXECUTE FORMAT('DELETE FROM %I WHERE %s',NOME_TABELA,CONDICAO_CHAVE);
+    IF UPPER(NOME_TABELA) NOT IN (
+        'TUTOR', 'PET', 'PLANO_PET', 'VINCULO', 'VETERINARIO',
+        'ATENDENTE', 'CONSULTA', 'VACINACAO', 'MEDICACAO',
+        'FARMACO', 'TIPO', 'PAGAMENTO', 'PARCELA', 'ESPECIALIDADE'
+    ) THEN
+        RAISE EXCEPTION 'A tabela "%" não existe no sistema. Tente novamente...', NOME_TABELA;
+    END IF;
+    
+    EXECUTE FORMAT('DELETE FROM %I WHERE %s',NOME_TABELA,CONDICAO_CHAVE);
 
-	GET DIAGNOSTICS LINHAS_AFETADAS = ROW_COUNT;
+    GET DIAGNOSTICS LINHAS_AFETADAS = ROW_COUNT;
 
-	-- SABER SE HOUVE EXCLUSAO(SE NAO HOUVER, O ERRO PODE ESTAR NA CONDICAO )
-	IF LINHAS_AFETADAS = 0 THEN
+    -- SABER SE HOUVE EXCLUSAO(SE NAO HOUVER, O ERRO PODE ESTAR NA CONDICAO )
+    IF LINHAS_AFETADAS = 0 THEN
         RAISE NOTICE '⚠️ Nenhum dado foi excluído da tabela "%" com a condição: %', NOME_TABELA, CONDICAO_CHAVE;
-		RAISE NOTICE '⚠️ O dado já foi excluido ou numca existiu...';
+        RAISE NOTICE '⚠️ O dado já foi excluido ou numca existiu...';
     ELSE
         RAISE NOTICE '✅ % registro(s) excluído(s) da tabela "%" com a condição: %', LINHAS_AFETADAS, NOME_TABELA, CONDICAO_CHAVE;
     END IF;
-		
+        
 EXCEPTION
-	WHEN OTHERS THEN
-		RAISE NOTICE '⚠️ Insira o nome da tabela ou a condição corretamente...';
-		RAISE EXCEPTION '❌ Erro ao deletar dados da tabela "%": %', NOME_TABELA, SQLERRM;
+    WHEN OTHERS THEN
+        RAISE NOTICE '⚠️ Insira o nome da tabela ou a condição corretamente...';
+        RAISE EXCEPTION '❌ Erro ao deletar dados da tabela "%": %', NOME_TABELA, SQLERRM;
 END;
 $$ LANGUAGE PLPGSQL;
+
 
 
