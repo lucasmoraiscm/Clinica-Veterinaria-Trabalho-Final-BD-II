@@ -162,6 +162,12 @@ INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_T
 ('Analgésico Dipirona Gotas', '10ml', '2027-06-30', 'DIP-3321E', '2025-01-22', 18.50, 150, 2),
 ('Shampoo Clorexidina Antisséptico', '200ml', '2028-04-15', 'SHA-7890F', '2025-06-01', 55.00, 60, 2);
 
+    --- FARMACOS COM VALIDADE PROXIMO,VENCIDO OU COM BAIXO ESTOQUE ---
+    INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_TIPO) VALUES
+    ('Vacina Leishmaniose (Leish-Tec)', '500mg', '2025-07-10', 'VEN-A123', '2024-01-10', 30.00, 12, 2),
+    ('Vacina Tosse dos Canis (Kennel Cough)', '1ml', '2025-07-05', 'VEN-B456', '2023-05-15', 42.50, 5, 1),
+    ('Ivermectina', '10ml', '2025-06-10', 'VEN-C789', '2024-02-10', 25.00, 8, 2),
+    ('Metronidazol', '500mg', '2027-01-25', 'VEN-D987', '2024-01-25', 18.00, 3, 2);
 
 --- MEDICACAO ---
 INSERT INTO MEDICACAO (DATA, HORA, COD_FARM) VALUES
