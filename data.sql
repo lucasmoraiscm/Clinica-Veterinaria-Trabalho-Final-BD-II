@@ -49,17 +49,17 @@ INSERT INTO VINCULO (DT_CONTRATACAO, STATUS, COD_PET, COD_PLANO_PET) VALUES
 
 
 --- ESPECIALIDADE ---
-INSERT INTO ESPECIALIDADE (NOME, DESCR) VALUES
-('Clínica Geral', 'Responsável pelo atendimento primário, consultas de rotina, vacinação e cuidados preventivos gerais para cães e gatos.'),
-('Dermatologia Veterinária', 'Diagnóstico e tratamento de doenças que afetam a pele, pelos, unhas e orelhas dos animais.'),
-('Cardiologia Veterinária', 'Focada no diagnóstico e tratamento de doenças do coração e do sistema circulatório, como insuficiência cardíaca e arritmias.'),
-('Oftalmologia Veterinária', 'Especialidade dedicada ao diagnóstico e tratamento de doenças e condições que afetam os olhos e a visão dos pets.'),
-('Ortopedia Veterinária', 'Trata de fraturas, luxações, displasias e outras lesões ou doenças do sistema locomotor (ossos, músculos e articulações).'),
-('Oncologia Veterinária', 'Diagnóstico e tratamento de diversos tipos de câncer em animais, incluindo quimioterapia e cuidados paliativos.'),
-('Neurologia Veterinária', 'Cuida de doenças que afetam o sistema nervoso central e periférico, como epilepsia, hérnias de disco e outras condições neurológicas.'),
-('Odontologia Veterinária', 'Especialidade voltada para a saúde bucal dos animais, incluindo limpeza de tártaro, tratamento de canal e extrações dentárias.'),
-('Animais Silvestres', 'Atendimento especializado para animais não convencionais ou exóticos, como aves, répteis e pequenos mamíferos.'),
-('Anestesiologia Veterinária', 'Responsável por administrar anestesias e sedativos, e monitorar os sinais vitais do paciente durante procedimentos cirúrgicos e exames.');
+INSERT INTO ESPECIALIDADE (NOME, DESCR, VALOR) VALUES
+('Clínica Geral', 'Responsável pelo atendimento primário, consultas de rotina, vacinação e cuidados preventivos gerais para cães e gatos.', 120.00),
+('Dermatologia Veterinária', 'Diagnóstico e tratamento de doenças que afetam a pele, pelos, unhas e orelhas dos animais.', 180.00),
+('Cardiologia Veterinária', 'Focada no diagnóstico e tratamento de doenças do coração e do sistema circulatório, como insuficiência cardíaca e arritmias.', 250.00),
+('Oftalmologia Veterinária', 'Especialidade dedicada ao diagnóstico e tratamento de doenças e condições que afetam os olhos e a visão dos pets.', 220.00),
+('Ortopedia Veterinária', 'Trata de fraturas, luxações, displasias e outras lesões ou doenças do sistema locomotor (ossos, músculos e articulações).', 280.00),
+('Oncologia Veterinária', 'Diagnóstico e tratamento de diversos tipos de câncer em animais, incluindo quimioterapia e cuidados paliativos.', 350.00),
+('Neurologia Veterinária', 'Cuida de doenças que afetam o sistema nervoso central e periférico, como epilepsia, hérnias de disco e outras condições neurológicas.', 320.00),
+('Odontologia Veterinária', 'Especialidade voltada para a saúde bucal dos animais, incluindo limpeza de tártaro, tratamento de canal e extrações dentárias.', 190.00),
+('Animais Silvestres', 'Atendimento especializado para animais não convencionais ou exóticos, como aves, répteis e pequenos mamíferos.', 210.00),
+('Anestesiologia Veterinária', 'Responsável por administrar anestesias e sedativos, e monitorar os sinais vitais do paciente durante procedimentos cirúrgicos e exames.', 400.00);
 
 
 --- VETERINARIO ---
@@ -92,92 +92,54 @@ INSERT INTO ATENDENTE (NOME, DT_NASC, SALARIO) VALUES
 
 --- PAGAMENTO ---
 INSERT INTO PAGAMENTO (FORMA_PAG, VALOR_TOTAL, QUANT_PARCELAS, DATA) VALUES
-('Crédito', 250.00, 2, '2025-01-20'),
-('Débito', 150.00, 1, '2025-01-22'),
-('Pix', 180.00, 1, '2025-02-05'),
-('Crédito', 150.00, 1, '2025-02-10'),
-('Débito', 250.00, 1, '2025-03-11'),
-('Pix', 150.00, 1, '2025-03-15'),
-('Crédito', 300.00, 3, '2025-04-01'),
-('Pix', 180.00, 1, '2025-04-05'),
-('Débito', 150.00, 1, '2025-05-18'),
-('Crédito', 250.00, 2, '2025-06-02'),
-('Pix', 130.50, 1, '2025-01-25'),
-('Débito', 95.00, 1, '2025-02-15'),
-('Crédito', 85.00, 1, '2025-02-20'),
-('Pix', 45.50, 1, '2025-03-10'),
-('Crédito', 165.00, 2, '2025-03-18'),
-('Débito', 95.00, 1, '2025-04-11'),
-('Pix', 70.00, 1, '2025-04-20'),
-('Crédito', 130.50, 1, '2025-05-05'),
-('Débito', 85.00, 1, '2025-05-21'),
-('Pix', 45.50, 1, '2025-06-03');
+('PIX', 153.50, 1, '2025-07-01'),
+('Crédito', 142.50, 3, '2025-07-02'),
+('Débito', 168.90, 1, '2025-07-03'),
+('PIX', 220.00, 1, '2025-07-05'),
+('PIX', 0.00, 1, '2025-07-08'),
+('Débito', 55.00, 1, '2025-07-10'),
+('Crédito', 175.00, 2, '2025-07-11'),
+('Dinheiro', 120.00, 1, '2025-07-14'),
+('PIX', 130.00, 1, '2025-07-15'),
+('Débito', 185.00, 1, '2025-07-18'),
+('Débito', 17.00, 1, '2025-08-01'),
+('PIX', 45.50, 1, '2025-08-01'),
+('Dinheiro', 70.00, 1, '2025-08-02'),
+('Débito', 51.00, 1, '2025-08-05'),
+('Crédito', 95.00, 2, '2025-08-08'),
+('PIX', 36.40, 1, '2025-08-10'),
+('Débito', 85.00, 1, '2025-08-11'),
+('PIX', 56.00, 1, '2025-08-15'),
+('Dinheiro', 9.10, 1, '2025-08-20'),
+('Crédito', 57.00, 1, '2025-08-22');
 
 
 --- PARCELA ---
 INSERT INTO PARCELA (VENC, VALOR, STATUS, COD_PAG) VALUES
-('2025-02-20', 125.00, TRUE, 1),
-('2025-03-20', 125.00, TRUE, 1),
-('2025-01-22', 150.00, TRUE, 2),
-('2025-02-05', 180.00, TRUE, 3),
-('2025-02-10', 150.00, TRUE, 4),
-('2025-03-11', 250.00, TRUE, 5),
-('2025-03-15', 150.00, TRUE, 6),
-('2025-05-01', 100.00, TRUE, 7),
-('2025-06-01', 100.00, TRUE, 7),
-('2025-07-01', 100.00, FALSE, 7),
-('2025-04-05', 180.00, TRUE, 8),
-('2025-05-18', 150.00, TRUE, 9),
-('2025-07-02', 125.00, FALSE, 10),
-('2025-08-02', 125.00, FALSE, 10),
-('2025-01-25', 130.50, TRUE, 11),
-('2025-02-15', 95.00, TRUE, 12),
-('2025-02-20', 85.00, TRUE, 13),
-('2025-03-10', 45.50, TRUE, 14),
-('2025-04-18', 82.50, TRUE, 15),
-('2025-05-18', 82.50, TRUE, 15),
-('2025-04-11', 95.00, TRUE, 16),
-('2025-04-20', 70.00, TRUE, 17),
-('2025-05-05', 130.50, TRUE, 18),
-('2025-05-21', 85.00, TRUE, 19),
-('2025-06-03', 45.50, TRUE, 20);
-
-
---- CONSULTA ---
-INSERT INTO CONSULTA (DATA, HORA, DIAGNOSTICO, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG) VALUES
-('2025-01-20', '10:00:00', 'Dermatite alérgica a picada de pulgas (DAPP).', 2, 1, 1, 1),
-('2025-01-22', '11:30:00', 'Otite externa bacteriana no ouvido direito.', 1, 2, 2, 2),
-('2025-02-05', '09:00:00', 'Check-up de rotina, animal saudável.', 1, 3, 3, 3),
-('2025-02-10', '14:00:00', 'Gengivite leve, recomendada limpeza de tártaro.', 8, 4, 4, 4),
-('2025-03-11', '16:00:00', 'Suspeita de sopro cardíaco, encaminhado para ecocardiograma.', 3, 5, 5, 5),
-('2025-03-15', '10:30:00', 'Vômitos e diarreia, diagnosticado com gastroenterite viral.', 1, 6, 6, 6),
-('2025-04-01', '08:45:00', 'Claudicação na pata dianteira esquerda. Luxação de patela.', 5, 7, 7, 7),
-('2025-04-05', '15:15:00', 'Avaliação pós-operatória de castração, tudo ok.', 1, 8, 8, 8),
-('2025-05-18', '11:00:00', 'Animal apresentando espirros constantes. Rinotraqueíte felina.', 1, 9, 9, 9),
-('2025-06-02', '17:00:00', 'Check-up em animal idoso. Sinais de artrose.', 5, 10, 10, 10);
-
-
---- VACINACAO ---
-INSERT INTO VACINACAO (DATA, HORA, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG) VALUES
-('2025-01-25', '15:00:00', 1, 1, 1, 11),
-('2025-02-15', '15:30:00', 1, 2, 2, 12),
-('2025-02-20', '16:00:00', 1, 3, 3, 13),
-('2025-03-10', '14:10:00', 1, 4, 4, 14),
-('2025-03-18', '11:00:00', 1, 5, 5, 15),
-('2025-04-11', '09:30:00', 1, 6, 6, 16),
-('2025-04-20', '10:45:00', 1, 7, 7, 17),
-('2025-05-05', '16:20:00', 1, 8, 8, 18),
-('2025-05-21', '12:00:00', 1, 9, 9, 19),
-('2025-06-03', '09:00:00', 1, 10, 10, 20);
-
-
---- MEDICACAO ---
-INSERT INTO MEDICACAO (DATA, HORA, COD_CONSULTA) VALUES
-('2025-01-20', '10:15:00', 1),
-('2025-01-22', '11:45:00', 2),
-('2025-03-15', '10:45:00', 6),
-('2025-05-18', '11:15:00', 9),
-('2025-06-02', '17:15:00', 10);
+('2025-07-01', 153.50, TRUE, 1),
+('2025-08-02', 47.50, FALSE, 2),
+('2025-09-02', 47.50, FALSE, 2),
+('2025-10-02', 47.50, FALSE, 2),
+('2025-07-03', 168.90, TRUE, 3),
+('2025-07-05', 220.00, TRUE, 4),
+('2025-07-08', 0.00, TRUE, 5),
+('2025-07-10', 55.00, TRUE, 6),
+('2025-08-11', 87.50, FALSE, 7),
+('2025-09-11', 87.50, FALSE, 7),
+('2025-07-14', 120.00, TRUE, 8),
+('2025-07-15', 130.00, TRUE, 9),
+('2025-07-18', 185.00, TRUE, 10),
+('2025-08-01', 17.00, TRUE, 11),
+('2025-08-01', 45.50, TRUE, 12),
+('2025-08-02', 70.00, TRUE, 13),
+('2025-08-05', 51.00, TRUE, 14),
+('2025-09-08', 47.50, FALSE, 15),
+('2025-10-08', 47.50, FALSE, 15),
+('2025-08-10', 36.40, TRUE, 16),
+('2025-08-11', 85.00, TRUE, 17),
+('2025-08-15', 56.00, TRUE, 18),
+('2025-08-20', 9.10, TRUE, 19),
+('2025-08-22', 57.00, TRUE, 20);
 
 
 --- TIPO ---
@@ -200,28 +162,38 @@ INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_T
 ('Shampoo Clorexidina Antisséptico', '200ml', '2028-04-15', 'SHA-7890F', '2025-06-01', 55.00, 60, 2);
 
 
---- ITEM_VACINACAO ---
-INSERT INTO ITEM_VACINACAO (COD_VACINACAO, COD_FARM) VALUES
-(1, 1),
-(1, 2),
-(2, 4),
-(3, 1),
-(4, 2),
-(5, 3),
-(5, 1),
-(6, 4),
-(7, 3),
-(8, 1),
-(8, 2),
-(9, 1),
-(10, 2);
+--- MEDICACAO ---
+INSERT INTO MEDICACAO (DATA, HORA, COD_FARM) VALUES
+('2025-07-01', '09:30:00', 9),
+('2025-07-03', '11:00:00', 8),
+('2025-07-10', '16:00:00', 10),
+('2025-07-15', '10:00:00', 7),
+('2025-07-18', '15:20:00', 6);
 
 
---- ITEM_MEDICACAO ---
-INSERT INTO ITEM_MEDICACAO (COD_MEDICACAO, COD_FARM) VALUES
-(1, 6),
-(1, 10),
-(2, 8),
-(3, 9),
-(4, 8),
-(5, 5);
+--- CONSULTA ---
+INSERT INTO CONSULTA (DATA, HORA, DIAGNOSTICO, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG, COD_MEDICACAO) VALUES
+('2025-07-01', '09:15:00', 'Pele irritada, suspeita de alergia a picada de pulga.', 2, 6, 1, 6, 1),
+('2025-07-02', '14:00:00', 'Presença de tártaro. Recomendada limpeza dentária.', 8, 8, 2, 7, NULL),
+('2025-07-03', '10:45:00', 'Otite externa bacteriana. Prescrito antibiótico.', 1, 5, 3, 8, 4),
+('2025-07-05', '16:00:00', 'Ulcera de córnea superficial. Tratamento iniciado.', 4, 2, 4, 9, NULL),
+('2025-07-08', '11:30:00', 'Check-up cardiológico de rotina. Sem alterações.', 3, 1, 5, 10, NULL),
+('2025-07-10', '15:45:00', 'Animal com dificuldade de locomoção. Suspeita de hérnia de disco.', 7, 9, 6, 11, 2),
+('2025-07-11', '08:30:00', 'Check-up oncológico. Acompanhamento de nódulo.', 6, 4, 7, 12, NULL),
+('2025-07-14', '17:00:00', 'Animal apático e com febre. Suspeita de virose.', 1, 7, 8, 13, NULL),
+('2025-07-15', '09:45:00', 'Ave (calopsita) com penas eriçadas. Exame de rotina e vermifugação.', 9, 10, 9, 14, 3),
+('2025-07-18', '15:00:00', 'Infestação por pulgas. Realizado tratamento tópico.', 1, 3, 10, 15, 4);
+
+
+--- VACINACAO ---
+INSERT INTO VACINACAO (DATA, HORA, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG, COD_FARM) VALUES
+('2025-08-01', '09:00:00', 1, 1, 1, 11, 1),
+('2025-08-01', '09:30:00', 1, 2, 2, 12, 2),
+('2025-08-02', '10:00:00', 1, 3, 3, 13, 4),
+('2025-08-05', '10:30:00', 1, 4, 4, 14, 1),
+('2025-08-08', '11:00:00', 1, 5, 5, 15, 3),
+('2025-08-10', '11:30:00', 1, 6, 6, 16, 2),
+('2025-08-11', '14:00:00', 1, 7, 7, 17, 1),
+('2025-08-15', '14:30:00', 1, 8, 8, 18, 4),
+('2025-08-20', '15:00:00', 1, 9, 9, 19, 2),
+('2025-08-22', '15:30:00', 1, 10, 10, 20, 3);
