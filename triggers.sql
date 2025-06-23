@@ -482,8 +482,8 @@ BEGIN
         IF NOT EXISTS (SELECT 1 FROM ATENDENTE WHERE COD_ATEND = NEW.COD_ATEND) THEN
             RAISE EXCEPTION 'O código do atendente informado não existe.';
         END IF;
-
-    END IF;
+    
+	END IF;
 
     IF TG_OP = 'DELETE' THEN
         RETURN OLD;
@@ -540,6 +540,10 @@ BEGIN
             RAISE EXCEPTION 'O código do fármaco informado não existe.';
         END IF;
 
+		UPDATE FARMACO 
+		SET QUANT = QUANT - 1
+		WHERE COD_FARM = NEW.COD_FARM;
+
     END IF;
 
     IF TG_OP = 'DELETE' THEN
@@ -572,6 +576,21 @@ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM FARMACO WHERE COD_FARM = NEW.COD_FARM) THEN
             RAISE EXCEPTION 'O código do fármaco informado não existe.';
         END IF;
+		
+		IF EXISTS (
+			SELECT 1
+			FROM MEDICACAO M JOIN FARMACO F
+			ON M.COD_FARM = F.COD_FARM
+			WHERE M.COD_MED = NEW.COD_MEDICACAO 
+			AND VALIDADADE < CURRENT_DATE
+		) THEN
+			RAISE EXCEPTION 'A validade do fármaco está vencida.';
+		END IF;
+		
+		UPDATE FARMACO
+		SET QUANT = QUANT - 1
+		WHERE COD_FARM = NEW.COD_FARM;
+		
     END IF;
 
     IF TG_OP = 'DELETE' THEN
