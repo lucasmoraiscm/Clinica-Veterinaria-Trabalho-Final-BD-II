@@ -13,7 +13,7 @@ INSERT INTO TUTOR (NOME, CPF, DT_NASC, FONE) VALUES
 
 
 --- PLANO_PET ---
-INSERT INTO PLANO_PET (NOME, VALOR, DESCONTO_CONSULTA, DESCONTO_VACINACAO) VALUES 
+INSERT INTO PLANO_PET (NOME, VALOR, DESCONTO_CONSULTA, DESCONTO_VACINACAO) VALUES
 ('Sem plano', 0, 0, 0),
 ('Plano Bem-Estar', 50, 25, 20),
 ('Plano Vitalidade', 100, 50, 40),
@@ -160,7 +160,10 @@ INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_T
 ('Antibiótico Amoxicilina', '250mg', '2026-10-25', 'AMX-4876D', '2025-03-30', 48.90, 75, 2),
 ('Analgésico Dipirona Gotas', '10ml', '2027-06-30', 'DIP-3321E', '2025-01-22', 18.50, 150, 2),
 ('Shampoo Clorexidina Antisséptico', '200ml', '2028-04-15', 'SHA-7890F', '2025-06-01', 55.00, 60, 2);
-
+('Vacina Leishmaniose (Leish-Tec)', '500mg', '2025-07-10', 'VEN-A123', '2024-01-10', 30.00, 12, 2),
+('Vacina Tosse dos Canis (Kennel Cough)', '1ml', '2025-07-05', 'VEN-B456', '2023-05-15', 42.50, 5, 1),
+('Ivermectina', '10ml', '2025-06-10', 'VEN-C789', '2024-02-10', 25.00, 8, 2),
+('Metronidazol', '500mg', '2027-01-25', 'VEN-D987', '2024-01-25', 18.00, 3, 2);
 
 --- MEDICACAO ---
 INSERT INTO MEDICACAO (DATA, HORA, COD_FARM) VALUES
