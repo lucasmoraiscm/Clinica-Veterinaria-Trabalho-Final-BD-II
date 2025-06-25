@@ -576,8 +576,16 @@ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM FARMACO WHERE COD_FARM = NEW.COD_FARM) THEN
             RAISE EXCEPTION 'O código do fármaco informado não existe.';
         END IF;
-		
+
 		IF EXISTS (
+			SELECT 1
+			FROM FARMACO F JOIN TIPO T
+			ON F.COD_TIPO = T.COD_TIPO
+			WHERE COD_FARM = NEW.COD_FARM 
+			AND T.NOME NOT ILIKE 'Medicamento'
+		) THEN
+			RAISE EXCEPTION 'O fármaco não é um medicamento';
+		ELSIF EXISTS (
 			SELECT 1
 			FROM FARMACO
 			WHERE COD_FARM = NEW.COD_FARM 
