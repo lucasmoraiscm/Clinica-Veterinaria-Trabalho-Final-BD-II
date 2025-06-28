@@ -592,6 +592,13 @@ BEGIN
 			AND VALIDADE < CURRENT_DATE
 		) THEN
 			RAISE EXCEPTION 'A validade do fármaco está vencida.';
+		ELSIF EXISTS (
+			SELECT 1
+			FROM FARMACO
+			WHERE COD_FARM = NEW.COD_FARM 
+			AND QUANT = 0
+		) THEN
+			RAISE EXCEPTION 'A quantidade do fármaco é igual a 0.';
 		ELSE
 			UPDATE FARMACO
 			SET QUANT = QUANT - 1
