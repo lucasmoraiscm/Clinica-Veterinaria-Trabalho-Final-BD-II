@@ -150,10 +150,10 @@ INSERT INTO TIPO (NOME) VALUES
 
 --- FARMACO ---
 INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_TIPO) VALUES
-('Vacina Polivalente V10', '1ml', '2027-05-20', 'V10-202501A', '2025-01-15', 85.00, 50, 1),
+('Vacina Polivalente V10', '1ml', '2027-05-20', 'V10-202501A', '2025-01-15', 85.00, 3, 1),
 ('Vacina Antirrábica', '1ml', '2027-10-30', 'RAB-202503B', '2025-03-20', 45.50, 80, 1),
 ('Vacina Quádrupla Felina', '1ml', '2027-08-01', 'V4F-202502D', '2025-02-25', 95.00, 40, 1),
-('Vacina contra Giárida', '1ml', '2026-12-15', 'GIA-202412C', '2025-01-10', 70.00, 30, 1),
+('Vacina contra Giárida', '1ml', '2025-01-01', 'GIA-202412C', '2025-01-10', 70.00, 30, 1),
 ('Anti-inflamatório Meloxicam', '2mg', '2026-11-10', 'MEL-9987A', '2025-04-05', 35.70, 100, 2),
 ('Antipulgas e Carrapatos (10-25kg)', '500mg', '2028-01-20', 'AP-5543B', '2025-05-10', 65.00, 120, 2),
 ('Vermífugo Plus (10kg)', '500ml', '2027-09-01', 'VER-1122C', '2025-02-18', 25.00, 200, 2),
