@@ -540,9 +540,33 @@ BEGIN
             RAISE EXCEPTION 'O código do fármaco informado não existe.';
         END IF;
 
-		UPDATE FARMACO 
-		SET QUANT = QUANT - 1
-		WHERE COD_FARM = NEW.COD_FARM;
+		IF EXISTS (
+			SELECT 1
+			FROM FARMACO F JOIN TIPO T
+			ON F.COD_TIPO = T.COD_TIPO
+			WHERE COD_FARM = NEW.COD_FARM 
+			AND T.NOME NOT ILIKE 'Vacina'
+		) THEN
+			RAISE EXCEPTION 'O fármaco não é uma vacina';
+		ELSIF EXISTS (
+			SELECT 1
+			FROM FARMACO
+			WHERE COD_FARM = NEW.COD_FARM 
+			AND VALIDADE < CURRENT_DATE
+		) THEN
+			RAISE EXCEPTION 'A validade do fármaco está vencida.';
+		ELSIF EXISTS (
+			SELECT 1
+			FROM FARMACO
+			WHERE COD_FARM = NEW.COD_FARM 
+			AND QUANT = 0
+		) THEN
+			RAISE EXCEPTION 'A quantidade do fármaco é igual a 0.';
+		ELSE
+			UPDATE FARMACO 
+			SET QUANT = QUANT - 1
+			WHERE COD_FARM = NEW.COD_FARM;
+		END IF;
 
     END IF;
 
