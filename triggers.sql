@@ -72,20 +72,20 @@ BEGIN
 			RAISE EXCEPTION 'O nome do plano pet não pode ser vazio.';
 		END IF;
 
-		IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
-			RAISE EXCEPTION 'O valor do plano pet não pode ser vazio ou menor que 0.';
+		IF NEW.VALOR IS NULL OR NEW.VALOR <= 0 THEN
+			RAISE EXCEPTION 'O valor do plano pet não pode ser vazio ou menor ou igual a 0.';
 		END IF;
 
-		IF NEW.DESCONTO_CONSULTA IS NULL OR NEW.DESCONTO_CONSULTA < 0 THEN
-			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser vazio ou menor que 0.';
+		IF NEW.DESCONTO_CONSULTA IS NULL OR NEW.DESCONTO_CONSULTA <= 0 THEN
+			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser vazio ou menor ou igual a 0.';
 		END IF;
 
 		IF NEW.DESCONTO_CONSULTA > 100 THEN
 			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser maior que 100.';
 		END IF;
 
-		IF NEW.DESCONTO_VACINACAO IS NULL OR NEW.DESCONTO_VACINACAO < 0 THEN
-			RAISE EXCEPTION 'O desconto da vacinacao do plano pet não pode ser vazio ou menor que 0.';
+		IF NEW.DESCONTO_VACINACAO IS NULL OR NEW.DESCONTO_VACINACAO <= 0 THEN
+			RAISE EXCEPTION 'O desconto da vacinacao do plano pet não pode ser vazio ou menor ou igual a 0.';
 		END IF;
 
 		IF NEW.DESCONTO_VACINACAO > 100 THEN
@@ -235,8 +235,8 @@ BEGIN
 			RAISE EXCEPTION 'A descrição da especialidade não pode ser vazia.';
 		END IF;
 
-		IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
-			RAISE EXCEPTION 'O valor da especialidade não pode ser vazio ou menor que 0.';
+		IF NEW.VALOR IS NULL OR NEW.VALOR <= 0 THEN
+			RAISE EXCEPTION 'O valor da especialidade não pode ser vazio ou menor ou igual a 0.';
 		END IF;
 
 		IF LENGTH(NEW.NOME) > 50 THEN
@@ -329,8 +329,8 @@ BEGIN
             RAISE EXCEPTION 'A data de nascimento do atendente não pode ser vazia.';
         END IF;
 
-        IF NEW.SALARIO IS NULL OR NEW.SALARIO < 0 THEN
-            RAISE EXCEPTION 'O salário do atendente não pode ser vazio ou menor que zero.';
+        IF NEW.SALARIO IS NULL OR NEW.SALARIO <= 0 THEN
+            RAISE EXCEPTION 'O salário do atendente não pode ser vazio ou menor ou igual a 0.';
         END IF;
 
         IF LENGTH(NEW.NOME) > 50 THEN
@@ -696,8 +696,8 @@ BEGIN
             RAISE EXCEPTION 'A data de entrada do fármaco não pode ser nula.';
         END IF;
 
-        IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
-            RAISE EXCEPTION 'O valor do fármaco não pode ser nulo ou negativo.';
+        IF NEW.VALOR IS NULL OR NEW.VALOR <= 0 THEN
+            RAISE EXCEPTION 'O valor do fármaco não pode ser nulo ou menor ou igual a 0.';
         END IF;
 
         IF NEW.QUANT IS NULL OR NEW.QUANT < 0 THEN
@@ -723,6 +723,14 @@ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM TIPO WHERE COD_TIPO = NEW.COD_TIPO) THEN
             RAISE EXCEPTION 'O código do tipo informado não existe.';
         END IF;
+
+		IF NEW.VALIDADE <= NOW()  THEN
+			RAISE EXCEPTION 'A validade do fármaco está vencida';
+		END IF;
+
+		IF TG_OP = 'INSERT' AND NEW.QUANT <= 0 THEN
+			RAISE EXCEPTION 'A quantidade do fármaco não pode ser 0';
+		END IF;
 
     END IF;
 
