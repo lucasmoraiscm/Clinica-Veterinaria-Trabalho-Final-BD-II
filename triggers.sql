@@ -72,20 +72,20 @@ BEGIN
 			RAISE EXCEPTION 'O nome do plano pet não pode ser vazio.';
 		END IF;
 
-		IF NEW.VALOR IS NULL OR NEW.VALOR <= 0 THEN
-			RAISE EXCEPTION 'O valor do plano pet não pode ser vazio ou menor ou igual a 0.';
+		IF NEW.VALOR IS NULL OR NEW.VALOR < 0 THEN
+			RAISE EXCEPTION 'O valor do plano pet não pode ser vazio ou menor que 0.';
 		END IF;
 
-		IF NEW.DESCONTO_CONSULTA IS NULL OR NEW.DESCONTO_CONSULTA <= 0 THEN
-			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser vazio ou menor ou igual a 0.';
+		IF NEW.DESCONTO_CONSULTA IS NULL OR NEW.DESCONTO_CONSULTA < 0 THEN
+			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser vazio ou menor que 0.';
 		END IF;
 
 		IF NEW.DESCONTO_CONSULTA > 100 THEN
 			RAISE EXCEPTION 'O desconto da consulta do plano pet não pode ser maior que 100.';
 		END IF;
 
-		IF NEW.DESCONTO_VACINACAO IS NULL OR NEW.DESCONTO_VACINACAO <= 0 THEN
-			RAISE EXCEPTION 'O desconto da vacinacao do plano pet não pode ser vazio ou menor ou igual a 0.';
+		IF NEW.DESCONTO_VACINACAO IS NULL OR NEW.DESCONTO_VACINACAO < 0 THEN
+			RAISE EXCEPTION 'O desconto da vacinacao do plano pet não pode ser vazio ou menor que 0.';
 		END IF;
 
 		IF NEW.DESCONTO_VACINACAO > 100 THEN
