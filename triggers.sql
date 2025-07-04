@@ -141,6 +141,10 @@ BEGIN
 			RAISE EXCEPTION 'O nome do porte do pet não pode ser vazio.';
 		END IF;
 
+		IF NEW.SEXO IS NULL OR NEW.SEXO = '' THEN
+			RAISE EXCEPTION 'O sexo do pet não pode ser vazio.';
+		END IF;
+
 		IF NEW.COD_TUTOR IS NULL THEN
 			RAISE EXCEPTION 'O código do tutor do pet não pode ser vazio.';
 		END IF;
@@ -160,6 +164,14 @@ BEGIN
 
 		IF LENGTH(NEW.PORTE) > 50 THEN
 			RAISE EXCEPTION 'O nome do porte do pet ultrapassa o limite de 50 caracteres.';
+		END IF;
+
+		IF LENGTH(NEW.SEXO) > 1 THEN
+			RAISE EXCEPTION 'O sexo do pet ultrapassa o limite de 1 caracter.';
+		END IF;
+
+		IF NEW.SEXO NOT ILIKE 'M' AND NEW.SEXO NOT ILIKE 'F' THEN
+			RAISE EXCEPTION 'O sexo do pet deve ser ''M'' para Macho e ''F'' para Fêmea';
 		END IF;
 
 		IF TG_OP = 'INSERT' AND EXISTS (
