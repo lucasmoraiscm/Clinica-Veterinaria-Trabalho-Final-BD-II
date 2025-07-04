@@ -21,17 +21,17 @@ INSERT INTO PLANO_PET (NOME, VALOR, DESCONTO_CONSULTA, DESCONTO_VACINACAO) VALUE
 
 
 --- PET ---
-INSERT INTO PET (NOME, DT_NASC, ESPECIE, PORTE, COD_TUTOR) VALUES
-('Thor', '2022-01-10', 'Cachorro', 'Grande', 1),
-('Luna', '2021-08-15', 'Gato', 'Pequeno', 2),
-('Mel', '2020-05-20', 'Cachorro', 'Pequeno', 3),
-('Bob', '2023-03-01', 'Cachorro', 'Médio', 4),
-('Lola', '2019-11-11', 'Gato', 'Médio', 5),
-('Amora', '2024-02-28', 'Cachorro', 'Pequeno', 6),
-('Simba', '2022-07-30', 'Gato', 'Pequeno', 7),
-('Chico', '2020-09-09', 'Cachorro', 'Médio', 8),
-('Luke', '2023-10-05', 'Cachorro', 'Grande', 9),
-('Magali', '2025-01-12', 'Gato', 'Médio', 10);
+INSERT INTO PET (NOME, DT_NASC, ESPECIE, PORTE, SEXO, COD_TUTOR) VALUES
+('Thor', '2022-01-10', 'Cachorro', 'Grande', 'M', 1),
+('Luna', '2021-08-15', 'Gato', 'Pequeno', 'F', 2),
+('Mel', '2020-05-20', 'Cachorro', 'Pequeno', 'F', 3),
+('Bob', '2023-03-01', 'Cachorro', 'Médio', 'M', 4),
+('Lola', '2019-11-11', 'Gato', 'Médio', 'F', 5),
+('Amora', '2024-02-28', 'Cachorro', 'Pequeno', 'F', 6),
+('Simba', '2022-07-30', 'Gato', 'Pequeno', 'M', 7),
+('Chico', '2020-09-09', 'Cachorro', 'Médio', 'M', 8),
+('Luke', '2023-10-05', 'Cachorro', 'Grande', 'M', 9),
+('Magali', '2025-01-12', 'Gato', 'Médio', 'F', 10);
 
 
 --- VINCULO ---
