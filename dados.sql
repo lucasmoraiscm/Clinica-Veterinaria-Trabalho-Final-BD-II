@@ -65,7 +65,7 @@ INSERT INTO ESPECIALIDADE (NOME, DESCR, VALOR) VALUES
 --- VETERINARIO ---
 INSERT INTO VETERINARIO (NOME, CRMV, COD_ESP) VALUES
 ('Ricardo Alves', 'CRMV-PI 1234', 1),
-('Dra. Camila Fernandes', 'CRMV-PI 2345', 2),
+('Camila Fernandes', 'CRMV-PI 2345', 2),
 ('Fernando Lima', 'CRMV-MA 3456', 3),
 ('Beatriz Costa', 'CRMV-PI 4567', 4),
 ('Tiago Mendes', 'CRMV-CE 5678', 5),
@@ -92,54 +92,60 @@ INSERT INTO ATENDENTE (NOME, DT_NASC, SALARIO) VALUES
 
 --- PAGAMENTO ---
 INSERT INTO PAGAMENTO (FORMA_PAG, VALOR_TOTAL, QUANT_PARCELAS, DATA) VALUES
-('PIX', 153.50, 1, '2025-07-01'),
-('Crédito', 142.50, 3, '2025-07-02'),
-('Débito', 168.90, 1, '2025-07-03'),
-('PIX', 220.00, 1, '2025-07-05'),
-('PIX', 0.00, 1, '2025-07-08'),
-('Débito', 55.00, 1, '2025-07-10'),
-('Crédito', 175.00, 2, '2025-07-11'),
-('Dinheiro', 120.00, 1, '2025-07-14'),
-('PIX', 130.00, 1, '2025-07-15'),
-('Débito', 185.00, 1, '2025-07-18'),
-('Débito', 17.00, 1, '2025-08-01'),
-('PIX', 45.50, 1, '2025-08-01'),
-('Dinheiro', 70.00, 1, '2025-08-02'),
-('Débito', 51.00, 1, '2025-08-05'),
-('Crédito', 95.00, 2, '2025-08-08'),
-('PIX', 36.40, 1, '2025-08-10'),
-('Débito', 85.00, 1, '2025-08-11'),
-('PIX', 56.00, 1, '2025-08-15'),
-('Dinheiro', 9.10, 1, '2025-08-20'),
-('Crédito', 57.00, 1, '2025-08-22');
+('Cartão de Crédito', 170.70, 2, '2025-01-01'),
+('Cartão de Crédito', 142.50, 2, '2025-01-02'),
+('PIX', 168.90, 1, '2025-02-03'),
+('Cartão de Crédito', 220.00, 2, '2025-02-05'),
+('Cartão de Crédito', 0.00, 1, '2025-03-08'),
+('Dinheiro', 65.00, 1, '2025-03-10'),
+('Cartão de Crédito', 175.00, 2, '2025-04-11'),
+('Pix', 60.00, 1, '2025-04-14'),
+('Cartão de Crédito', 130.00, 1, '2025-05-15'),
+('Dinheiro', 138.90, 1, '2025-05-18'),
+
+('Cartão de Crédito', 17.00, 1, '2025-01-01'),
+('Pix', 45.50, 1, '2025-01-01'),
+('Cartão de Crédito', 56.00, 2, '2025-02-02'),
+('Cartão de Crédito', 51.00, 2, '2025-02-05'),
+('Cartão de Crédito', 95.00, 2, '2025-03-08'),
+('PIX', 36.40, 1, '2025-03-10'),
+('Dinheiro', 51.00, 1, '2025-04-11'),
+('Pix', 56.00, 1, '2025-04-15'),
+('Cartão de Crédito', 9.10, 1, '2025-05-20'),
+('Cartão de Crédito', 57.00, 2, '2025-05-22'); 
 
 
 --- PARCELA ---
 INSERT INTO PARCELA (VENC, VALOR, STATUS, COD_PAG) VALUES
-('2025-07-01', 153.50, TRUE, 1),
-('2025-08-02', 47.50, FALSE, 2),
-('2025-09-02', 47.50, FALSE, 2),
-('2025-10-02', 47.50, FALSE, 2),
-('2025-07-03', 168.90, TRUE, 3),
-('2025-07-05', 220.00, TRUE, 4),
-('2025-07-08', 0.00, TRUE, 5),
-('2025-07-10', 55.00, TRUE, 6),
-('2025-08-11', 87.50, FALSE, 7),
-('2025-09-11', 87.50, FALSE, 7),
-('2025-07-14', 120.00, TRUE, 8),
-('2025-07-15', 130.00, TRUE, 9),
-('2025-07-18', 185.00, TRUE, 10),
-('2025-08-01', 17.00, TRUE, 11),
-('2025-08-01', 45.50, TRUE, 12),
-('2025-08-02', 70.00, TRUE, 13),
-('2025-08-05', 51.00, TRUE, 14),
-('2025-09-08', 47.50, FALSE, 15),
-('2025-10-08', 47.50, FALSE, 15),
-('2025-08-10', 36.40, TRUE, 16),
-('2025-08-11', 85.00, TRUE, 17),
-('2025-08-15', 56.00, TRUE, 18),
-('2025-08-20', 9.10, TRUE, 19),
-('2025-08-22', 57.00, TRUE, 20);
+('2025-01-10', 85.35, TRUE, 1),
+('2025-02-10', 85.35, FALSE, 1),
+('2025-01-09', 71.25, TRUE, 2),
+('2025-02-09', 71.25, FALSE, 2),
+('2025-02-03', 120.00, TRUE, 3),
+('2025-02-12', 110.00, TRUE, 4),
+('2025-03-12', 110.00, FALSE, 4),
+('2025-03-08', 0.00, TRUE, 5),
+('2025-03-10', 65.00, TRUE, 6),
+('2025-04-18', 87.50, TRUE, 7),
+('2025-05-18', 87.50, FALSE, 7),
+('2025-04-14', 60.00, TRUE, 8),
+('2025-05-15', 130.00, TRUE, 9),
+('2025-05-18', 138.90, TRUE, 10),
+
+('2025-01-01', 17.00, TRUE, 11),
+('2025-01-01', 45.50, TRUE, 12),
+('2025-02-02', 28.00, TRUE, 13),
+('2025-03-02', 28.00, FALSE, 13),
+('2025-02-05', 25.50, TRUE, 14),
+('2025-03-05', 25.50, FALSE, 14),
+('2025-03-08', 47.50, TRUE, 15),
+('2025-04-08', 47.50, FALSE, 15),
+('2025-03-10', 36.40, TRUE, 16),
+('2025-04-11', 51.00, TRUE, 17),
+('2025-04-15', 56.00, TRUE, 18),
+('2025-05-20', 9.10, TRUE, 19),
+('2025-05-22', 28.50, TRUE, 20),
+('2025-06-22', 28.50, FALSE, 20);
 
 
 --- TIPO ---
@@ -159,7 +165,7 @@ INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_T
 ('Vermífugo Plus (10kg)', '500ml', '2027-09-01', 'VER-1122C', '2025-02-18', 25.00, 200, 2),
 ('Antibiótico Amoxicilina', '250mg', '2026-10-25', 'AMX-4876D', '2025-03-30', 48.90, 75, 2),
 ('Analgésico Dipirona Gotas', '10ml', '2027-06-30', 'DIP-3321E', '2025-01-22', 18.50, 150, 2),
-('Shampoo Clorexidina Antisséptico', '200ml', '2028-04-15', 'SHA-7890F', '2025-06-01', 55.00, 60, 2);
+('Shampoo Clorexidina Antisséptico', '200ml', '2028-04-15', 'SHA-7890F', '2025-06-01', 55.00, 60, 2),
 ('Vacina Leishmaniose (Leish-Tec)', '500mg', '2025-07-10', 'VEN-A123', '2024-01-10', 30.00, 12, 2),
 ('Vacina Tosse dos Canis (Kennel Cough)', '1ml', '2025-07-05', 'VEN-B456', '2023-05-15', 42.50, 5, 1),
 ('Ivermectina', '10ml', '2025-06-10', 'VEN-C789', '2024-02-10', 25.00, 8, 2),
@@ -167,36 +173,36 @@ INSERT INTO FARMACO (NOME, DOSE, VALIDADE, LOTE, DT_ENTRADA, VALOR, QUANT, COD_T
 
 --- MEDICACAO ---
 INSERT INTO MEDICACAO (DATA, HORA, COD_FARM) VALUES
-('2025-07-01', '09:30:00', 9),
-('2025-07-03', '11:00:00', 8),
-('2025-07-10', '16:00:00', 10),
-('2025-07-15', '10:00:00', 7),
-('2025-07-18', '15:20:00', 6);
+('2025-01-01', '09:20:00', 5),
+('2025-03-10', '15:50:00', 6),
+('2025-05-15', '09:50:00', 7),
+('2025-02-03', '10:50:00', 8),
+('2025-05-18', '15:05:00', 8);
 
 
 --- CONSULTA ---
 INSERT INTO CONSULTA (DATA, HORA, DIAGNOSTICO, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG, COD_MEDICACAO) VALUES
-('2025-07-01', '09:15:00', 'Pele irritada, suspeita de alergia a picada de pulga.', 2, 6, 1, 6, 1),
-('2025-07-02', '14:00:00', 'Presença de tártaro. Recomendada limpeza dentária.', 8, 8, 2, 7, NULL),
-('2025-07-03', '10:45:00', 'Otite externa bacteriana. Prescrito antibiótico.', 1, 5, 3, 8, 4),
-('2025-07-05', '16:00:00', 'Ulcera de córnea superficial. Tratamento iniciado.', 4, 2, 4, 9, NULL),
-('2025-07-08', '11:30:00', 'Check-up cardiológico de rotina. Sem alterações.', 3, 1, 5, 10, NULL),
-('2025-07-10', '15:45:00', 'Animal com dificuldade de locomoção. Suspeita de hérnia de disco.', 7, 9, 6, 11, 2),
-('2025-07-11', '08:30:00', 'Check-up oncológico. Acompanhamento de nódulo.', 6, 4, 7, 12, NULL),
-('2025-07-14', '17:00:00', 'Animal apático e com febre. Suspeita de virose.', 1, 7, 8, 13, NULL),
-('2025-07-15', '09:45:00', 'Ave (calopsita) com penas eriçadas. Exame de rotina e vermifugação.', 9, 10, 9, 14, 3),
-('2025-07-18', '15:00:00', 'Infestação por pulgas. Realizado tratamento tópico.', 1, 3, 10, 15, 4);
+('2025-01-01', '09:15:00', 'Pele irritada, suspeita de alergia a picada de pulga.', 2, 6, 1, 1, 1),
+('2025-01-02', '14:00:00', 'Presença de tártaro. Recomendada limpeza dentária.', 8, 8, 2, 2, NULL),
+('2025-02-03', '10:45:00', 'Otite externa bacteriana. Prescrito antibiótico.', 1, 5, 3, 3, 4),
+('2025-02-05', '16:00:00', 'Ulcera de córnea superficial. Tratamento iniciado.', 4, 2, 4, 4, NULL),
+('2025-03-08', '11:30:00', 'Check-up cardiológico de rotina. Sem alterações.', 3, 1, 5, 5, NULL),
+('2025-03-10', '15:45:00', 'Animal com dificuldade de locomoção. Suspeita de hérnia de disco.', 7, 9, 6, 6, 2),
+('2025-04-11', '08:30:00', 'Check-up oncológico. Acompanhamento de nódulo.', 6, 4, 7, 7, NULL),
+('2025-04-14', '17:00:00', 'Animal apático e com febre. Suspeita de virose.', 1, 7, 8, 8, NULL),
+('2025-05-15', '09:45:00', 'Ave (calopsita) com penas eriçadas. Exame de rotina e vermifugação.', 9, 10, 9, 9, 3),
+('2025-05-18', '15:00:00', 'Infestação por pulgas. Realizado tratamento tópico.', 1, 3, 10, 10, 5);
 
 
 --- VACINACAO ---
 INSERT INTO VACINACAO (DATA, HORA, COD_VET, COD_VINCULO, COD_ATEND, COD_PAG, COD_FARM) VALUES
-('2025-08-01', '09:00:00', 1, 1, 1, 11, 1),
-('2025-08-01', '09:30:00', 1, 2, 2, 12, 2),
-('2025-08-02', '10:00:00', 1, 3, 3, 13, 4),
-('2025-08-05', '10:30:00', 1, 4, 4, 14, 1),
-('2025-08-08', '11:00:00', 1, 5, 5, 15, 3),
-('2025-08-10', '11:30:00', 1, 6, 6, 16, 2),
-('2025-08-11', '14:00:00', 1, 7, 7, 17, 1),
-('2025-08-15', '14:30:00', 1, 8, 8, 18, 4),
-('2025-08-20', '15:00:00', 1, 9, 9, 19, 2),
-('2025-08-22', '15:30:00', 1, 10, 10, 20, 3);
+('2025-01-01', '09:00:00', 1, 1, 1, 11, 1),
+('2025-01-01', '09:30:00', 1, 2, 2, 12, 2),
+('2025-02-02', '10:00:00', 1, 3, 3, 13, 4),
+('2025-02-05', '10:30:00', 1, 4, 4, 14, 1),
+('2025-03-08', '11:00:00', 1, 5, 5, 15, 3),
+('2025-03-10', '11:30:00', 1, 6, 6, 16, 2),
+('2025-04-11', '14:00:00', 1, 7, 7, 17, 1),
+('2025-04-15', '14:30:00', 1, 8, 8, 18, 4),
+('2025-05-20', '15:00:00', 1, 9, 9, 19, 2),
+('2025-05-22', '15:30:00', 1, 10, 10, 20, 3);
