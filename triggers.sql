@@ -95,6 +95,14 @@ BEGIN
 		IF LENGTH(NEW.NOME) > 50 THEN
 			RAISE EXCEPTION 'O nome do plano pet ultrapassa o limite de 50 caracteres.';
 		END IF;
+
+		IF TG_OP = 'INSERT' AND EXISTS (
+			SELECT 1
+			FROM PLANO_PET
+			WHERE NOME ILIKE NEW.NOME
+		) THEN
+			RAISE EXCEPTION 'Já existe um plano pet cadastrado com esse nome';
+		END IF;
 		
 	END IF;
 
@@ -152,6 +160,15 @@ BEGIN
 
 		IF LENGTH(NEW.PORTE) > 50 THEN
 			RAISE EXCEPTION 'O nome do porte do pet ultrapassa o limite de 50 caracteres.';
+		END IF;
+
+		IF TG_OP = 'INSERT' AND EXISTS (
+			SELECT 1
+			FROM PET P JOIN TUTOR T
+			ON P.COD_TUTOR = T.COD_TUTOR
+			WHERE P.NOME ILIKE NEW.NOME AND T.COD_TUTOR = NEW.COD_TUTOR
+		) THEN
+			RAISE EXCEPTION 'Já existe um pet para esse tutor cadastrado com esse nome';
 		END IF;
 	END IF;
 
@@ -241,6 +258,14 @@ BEGIN
 
 		IF LENGTH(NEW.NOME) > 50 THEN
 			RAISE EXCEPTION 'O nome da especialidade ultrapassa o limite de 50 caracteres.';
+		END IF;
+
+		IF TG_OP = 'INSERT' AND EXISTS (
+			SELECT 1
+			FROM ESPECIALIDADE
+			WHERE NOME ILIKE NEW.NOME
+		) THEN
+			RAISE EXCEPTION 'Já existe uma especialidade cadastrada com esse nome';
 		END IF;
 	END IF;
 
@@ -336,6 +361,14 @@ BEGIN
         IF LENGTH(NEW.NOME) > 50 THEN
             RAISE EXCEPTION 'O nome do atendente ultrapassa o limite de 50 caracteres.';
         END IF;
+
+		IF TG_OP = 'INSERT' AND EXISTS (
+			SELECT 1
+			FROM ATENDENTE
+			WHERE NOME ILIKE NEW.NOME AND DT_NASC = NEW.DT_NASC
+		) THEN
+			RAISE EXCEPTION 'Já existe um atendente cadastrado com esse nome e data de nascimento';
+		END IF;
     END IF;
 	
     IF TG_OP = 'DELETE' THEN
@@ -656,6 +689,13 @@ BEGIN
             RAISE EXCEPTION 'O nome do tipo ultrapassa o limite de 30 caracteres.';
         END IF;
 
+		IF TG_OP = 'INSERT' AND EXISTS (
+			SELECT 1
+			FROM TIPO
+			WHERE NOME ILIKE NEW.NOME
+		) THEN
+			RAISE EXCEPTION 'Já existe um tipo cadastrado com esse nome';
+		END IF;
     END IF;
 
     IF TG_OP = 'DELETE' THEN
@@ -723,6 +763,14 @@ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM TIPO WHERE COD_TIPO = NEW.COD_TIPO) THEN
             RAISE EXCEPTION 'O código do tipo informado não existe.';
         END IF;
+
+		IF TG_OP = 'INSERT' AND EXISTS (
+			SELECT 1
+			FROM FARMACO
+			WHERE NOME ILIKE NEW.NOME AND COD_TIPO = NEW.COD_TIPO
+		) THEN
+			RAISE EXCEPTION 'Já existe um fármaco para esse tipo cadastrado com esse nome';
+		END IF;
 
 		IF NEW.VALIDADE <= NOW()  THEN
 			RAISE EXCEPTION 'A validade do fármaco está vencida';
