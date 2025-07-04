@@ -10,7 +10,10 @@ CREATE ROLE GRUPO_ATENDENTE NOLOGIN;
 CREATE ROLE GRUPO_TUTOR NOLOGIN;
 CREATE ROLE GRUPO_VETERINARIO NOLOGIN;
 
---- PERMISSOES PARA ATENDENTE
+
+-- ==================================
+-- =  PERMISSOES PARA ATENDENTE 🧑‍💻 =
+-- ==================================
 
 GRANT EXECUTE ON FUNCTION
     INSERIR_DADOS(TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT),
@@ -36,3 +39,43 @@ GRANT EXECUTE ON FUNCTION
     RELATORIO_FATURAMENTO_DA_CLINICA(TEXT, TEXT),
     RELATORIO_AGENDA_DO_DIA(TEXT, TEXT)
 TO GRUPO_ATENDENTE;
+
+
+-- ====================================
+-- =  PERMISSOES PARA VETERINARIO 🧑‍⚕️ =
+-- ====================================
+
+
+GRANT EXECUTE ON FUNCTION
+    RELATORIO_HISTORICO_PACIENTE(VARCHAR, VARCHAR),
+    RELATORIO_CONS_VAC_REALIZADAS(VARCHAR, TEXT, TEXT)
+TO GRUPO_VETERINARIO;
+
+
+-- ==============================
+-- =  PERMISSOES PARA TUTOR 🐶 =
+-- ==============================
+
+GRANT EXECUTE ON FUNCTION
+    RELATORIO_HISTORICO_DO_SEU_PET(VARCHAR, VARCHAR, TEXT),
+    RELATORIO_SEUS_GASTOS(VARCHAR, TEXT, TEXT),
+    RELATORIO_VISUALIZAR_PERFIL_DO_PET(VARCHAR, VARCHAR)
+TO GRUPO_TUTOR;
+
+
+-- =========================================
+-- =  CRIACAO DE USUARIOS E ATRIBUIR ROLES =
+-- =========================================
+
+
+-- 🧑‍💻
+CREATE USER user_leticia WITH PASSWORD 'senha_atendente_123';
+GRANT GRUPO_ATENDENTE TO user_leticia;
+
+-- 🧑‍⚕️
+CREATE USER user_ricardo WITH PASSWORD 'senha_veterinario_456';
+GRANT GRUPO_VETERINARIO TO user_ricardo;
+
+-- 🐶
+CREATE USER user_anaclara WITH PASSWORD 'senha_tutor_789';
+GRANT GRUPO_TUTOR TO user_anaclara;
