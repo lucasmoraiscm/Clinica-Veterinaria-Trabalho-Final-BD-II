@@ -8,9 +8,18 @@ O sistema foi projetado para gerenciar informações de tutores, pets, planos de
 
 ## 🗂️ Estrutura do Repositório
 
-- `tables.sql`: Script SQL para criação de todas as tabelas do banco de dados, com definição de chaves primárias, estrangeiras e principais restrições de integridade.
-- `DER_CLINICA_VETERINARIA.pdf`: Diagrama Entidade-Relacionamento (DER) que ilustra a modelagem do banco de dados.
 - `README.md`: Este arquivo de explicação do projeto.
+- `DER_CLINICA_VETERINARIA.pdf`: Diagrama Entidade-Relacionamento (DER) que ilustra a modelagem do banco de dados.
+- `tables.sql`: Script SQL para criação de todas as tabelas do banco de dados, com definição de chaves primárias, estrangeiras e principais restrições de integridade.
+- `triggers.sql`: Script SQL para garantir que ações específicas sejam disparadas no momento em que uma tabela for manipulada, garantindo que somente dados corretos sejam inseridos nas tabelas e que as principais restrições de integridade sejam satisfeitas.
+- `dados.sql`: Script SQL para inserir alguns dados iniciais nas tabelas.
+- `funcoes_genericas.sql`: Script SQL para criação de funções que inserem, atualizam e deletam dados em qualquer uma das tabelas do banco de dados.
+- `funcoes_uteis.sql`: Script SQL para criação de funções que seram utilizadas pelas demais funções do banco de dados.
+- `funcoes_principais.sql`: Script SQL para criação de funções que realizam as principais ações do banco de dados.
+- `relatorios.sql`: Script SQL para criação de funções que trazem informações relevantes para cada usuário do banco de dados.
+- `controle_de_acesso.sql`: Script SQL para controlar o acesso de usuários, permitindo o acesso somente as funcionalidades adequadas para cada usuário.
+- `exemplo_execucoes.sql`: Script SQL para exemplificar o uso das funcionalidades do banco de dados.
+
 
 ## 🗃️ Modelagem do Banco de Dados
 
@@ -26,7 +35,6 @@ O banco de dados foi modelado para representar os principais processos de uma cl
 - **MEDICACAO**: Medicamentos administrados durante consultas.
 - **FARMACO** e **TIPO**: Controle de estoque de medicamentos e seus tipos.
 - **PAGAMENTO** e **PARCELA**: Controle de pagamentos e parcelamentos.
-- **ITEM_VACINACAO** e **ITEM_MEDICACAO**: Relação entre vacinas/medicações e os fármacos utilizados.
 
 ## 👩‍💻 Autor
 
